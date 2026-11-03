@@ -1,3 +1,4 @@
+
 name: Build YuDeck APK
 
 on:
@@ -11,6 +12,7 @@ permissions:
 
 jobs:
   build:
+    name: Build YuDeck Android App
     runs-on: ubuntu-latest
 
     steps:
@@ -32,14 +34,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-       - name: Extract YuDeck project
+      - name: Extract YuDeck project
         run: unzip -o YuDeck-Cloud-Build.zip -d source
 
-      - name: Build YuDeck
+      - name: Build YuDeck APK
         run: gradle -p source assembleDebug
 
-      - name: Upload APK
+      - name: Upload YuDeck APK
         uses: actions/upload-artifact@v4
         with:
           name: YuDeck-APK
           path: source/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
